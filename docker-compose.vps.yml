@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env.vps
+    volumes:
+      - gateway_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gateway -d gateway"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file: .env.vps
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: gateway
+      DB_USER: gateway
+      DB_SSL_MODE: disable
+      APP_PORT: 8080
+      UPLOAD_DIR: /app/uploads
+    ports:
+      - "127.0.0.1:6201:8080"
+    volumes:
+      - gateway_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: /gw
+        NEXT_PUBLIC_APP_URL: https://gpzes.com
+        NEXT_PUBLIC_SITE_URL: https://gpzes.com
+        NEXT_PUBLIC_GATEWAY_API_URL: https://gpzes.com/gw
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      BACKEND_URL: http://backend:8080
+      NEXT_PUBLIC_API_URL: /gw
+      NEXT_PUBLIC_APP_URL: https://gpzes.com
+      NEXT_PUBLIC_SITE_URL: https://gpzes.com
+    ports:
+      - "127.0.0.1:6200:3000"
+    depends_on:
+      - backend
+
+volumes:
+  gateway_postgres:
+  gateway_uploads:

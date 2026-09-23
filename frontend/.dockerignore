@@ -1,0 +1,5 @@
+# Root `app/` must never shadow `src/app` (VPS leftover broke admin History).
+/app
+node_modules
+.next
+.git

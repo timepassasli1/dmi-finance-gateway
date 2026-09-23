@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gateway Verifier</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">V</div>
+    <div class="titles">
+      <h1>Payment Verifier</h1>
+      <p class="sub">v3.6.1 · gpzes.com production</p>
+    </div>
+    <label class="toggle" title="Enable">
+      <input type="checkbox" id="enabled" />
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <section class="card tip">
+    <strong>v3.6.4 — client-scoped agent only</strong>
+    <ol>
+      <li>Gateway: <strong>https://gpzes.com/gw</strong></li>
+      <li>Agent: <strong>AGENT_VIVEK</strong></li>
+      <li><strong>Test connection</strong> dabao — Pending count aana chahiye</li>
+      <li>Sirf <em>GW…</em> note se SUCCESS — amount se kabhi nahi</li>
+      <li>Paytm Transactions tab pe attach rakho</li>
+    </ol>
+  </section>
+
+  <section class="card switches">
+    <label class="row">
+      <span>Auto-approve</span>
+      <input type="checkbox" id="autoApprove" checked />
+    </label>
+  </section>
+
+  <section class="card">
+    <label>
+      Gateway URL
+      <input id="gatewayUrl" type="url" placeholder="https://gpzes.com/gw" spellcheck="false" />
+    </label>
+    <div class="grid2">
+      <label>
+        Agent Code
+        <input id="agentCode" type="text" spellcheck="false" />
+      </label>
+      <label>
+        Agent Secret
+        <input id="agentSecret" type="password" />
+      </label>
+    </div>
+    <label>
+      Fallback Payment ID
+      <input id="lastPaymentId" type="text" placeholder="PAY_… optional" spellcheck="false" />
+    </label>
+    <label>
+      Manual amount (₹)
+      <input id="manualAmount" type="number" min="0.01" step="0.01" placeholder="1" />
+    </label>
+  </section>
+
+  <section class="card stats">
+    <div><span id="pendingCount">0</span><label>Pending</label></div>
+    <div><span id="merchantTabs">0</span><label>Attached</label></div>
+    <div><span id="watchState">—</span><label>Watch</label></div>
+  </section>
+  <p id="lastPoll" class="meta">Not polled yet</p>
+  <p id="attachMeta" class="meta">Attached tab: none</p>
+  <pre id="pendingList" class="last" style="max-height:120px;margin-top:8px">No pending</pre>
+
+  <div class="actions">
+    <button id="attach" class="primary">Attach to this tab</button>
+    <button id="detach" class="ghost">Detach</button>
+    <button id="tick" class="ghost">Scan now</button>
+    <button id="testConn" class="ghost">Test connection</button>
+    <button id="openPaytm" class="ghost">Open Paytm</button>
+    <button id="testSuccess" class="ok">Manual SUCCESS</button>
+    <button id="testFailed" class="bad">Manual FAILED</button>
+  </div>
+
+  <div id="status" class="status"></div>
+  <pre id="last" class="last">No events yet</pre>
+
+  <footer>Paytm pe auto-inject nahi. Sirf Attach ke baad watch.</footer>
+  <script src="popup.js"></script>
+</body>
+</html>

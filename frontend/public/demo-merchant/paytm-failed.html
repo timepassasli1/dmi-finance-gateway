@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paytm – Payment Failed (Demo)</title>
+  <style>
+    body { margin:0; font-family: system-ui, sans-serif; background:#00baf2; color:#fff; min-height:100vh; display:grid; place-items:center; }
+    .card { background:#fff; color:#111; width:min(380px,92vw); border-radius:20px; padding:28px 22px; text-align:center; }
+    .bad { width:72px; height:72px; border-radius:50%; background:#fee2e2; color:#dc2626; display:grid; place-items:center; margin:0 auto 14px; font-size:36px; }
+    h1 { font-size:20px; margin:0 0 6px; }
+    .amt { font-size:28px; font-weight:700; margin:12px 0; }
+    .meta { font-size:12px; color:#666; line-height:1.7; }
+  </style>
+</head>
+<body>
+  <div class="card"
+       data-gateway-status="FAILED"
+       data-gateway-payment-id=""
+       data-order-id=""
+       data-txn-ref=""
+       data-amount-paise="">
+    <div class="bad">✕</div>
+    <h1>Payment Failed</h1>
+    <div class="amt" id="amt">₹0.00</div>
+    <div class="meta">
+      Paytm (demo)<br/>
+      Payment ID: <strong id="payId">—</strong><br/>
+      Order ID: <strong id="ordId">—</strong><br/>
+      Reason: Declined by bank
+    </div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    const pay = q.get('payment_id') || q.get('pay') || '';
+    const ord = q.get('order_id') || '';
+    const amt = q.get('amount') || '0';
+    const paise = Math.round(Number(amt) * 100);
+    const card = document.querySelector('.card');
+    card.setAttribute('data-gateway-payment-id', pay);
+    card.setAttribute('data-order-id', ord);
+    card.setAttribute('data-amount-paise', String(paise));
+    document.getElementById('payId').textContent = pay || '—';
+    document.getElementById('ordId').textContent = ord || '—';
+    document.getElementById('amt').textContent = '₹' + Number(amt).toFixed(2);
+  </script>
+</body>
+</html>

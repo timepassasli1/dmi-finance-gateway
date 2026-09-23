@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo Merchant Confirmations</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #0f172a; }
+    input, button { padding: 10px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; }
+    input { width: 100%; margin: 6px 0 12px; }
+    button { background: #2563eb; color: #fff; border: 0; cursor: pointer; margin-right: 8px; margin-bottom: 8px; }
+    .box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; }
+    code { background: #e2e8f0; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Demo UPI / Merchant result pages</h1>
+  <p>Extension inhe dekh ke live payment page update karegi. Real PhonePe/Paytm ke liye bhi same detectors chalenge, lekin production me official API/webhook preferred hai.</p>
+  <div class="box">
+    <label>Gateway Payment ID (PAY_...)</label>
+    <input id="pay" placeholder="PAY_1786..." />
+    <label>Order ID (optional)</label>
+    <input id="ord" placeholder="ORD_AMIT_..." />
+    <label>Amount (₹)</label>
+    <input id="amt" value="500" />
+    <button onclick="go('phonepe-success.html')">Open PhonePe SUCCESS</button>
+    <button onclick="go('paytm-failed.html')" style="background:#dc2626">Open Paytm FAILED</button>
+  </div>
+  <p style="margin-top:16px;font-size:13px;color:#64748b">
+    Live page: <code id="live">https://gpzes.com/pay/...</code>
+  </p>
+  <script>
+    const q = new URLSearchParams(location.search);
+    if (q.get('payment_id')) document.getElementById('pay').value = q.get('payment_id');
+    if (q.get('order_id')) document.getElementById('ord').value = q.get('order_id');
+    if (q.get('amount')) document.getElementById('amt').value = q.get('amount');
+    function go(file) {
+      const pay = document.getElementById('pay').value.trim();
+      const ord = document.getElementById('ord').value.trim();
+      const amt = document.getElementById('amt').value.trim() || '0';
+      const url = `/demo-merchant/${file}?payment_id=${encodeURIComponent(pay)}&order_id=${encodeURIComponent(ord)}&amount=${encodeURIComponent(amt)}`;
+      document.getElementById('live').textContent = `${location.origin}/pay/${pay}`;
+      location.href = url;
+    }
+  </script>
+</body>
+</html>

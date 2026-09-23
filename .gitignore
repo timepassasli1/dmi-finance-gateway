@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/vendor/
+
+# Build / local runtime
+.next/
+frontend/.next/
+dist/
+build/
+*.exe
+/tmp/
+.pgdata/
+backend/uploads/
+*.log
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+!.env.cloud.example
+frontend/.env.local
+backend/.env
+.env.vps
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+.cursor/
+
+# Go
+backend/server
+/tmp/gateway-server
+
+# Docker volumes / local data
+postgres_data/
+*.sql.gz
+
+# Chrome extension packaging keys
+extension.pem
+extension.crx
+*.pem

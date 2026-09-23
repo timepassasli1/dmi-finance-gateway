@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PhonePe – Payment Successful (Demo)</title>
+  <style>
+    body { margin:0; font-family: system-ui, sans-serif; background:#5f259f; color:#fff; min-height:100vh; display:grid; place-items:center; }
+    .card { background:#fff; color:#111; width:min(380px,92vw); border-radius:20px; padding:28px 22px; text-align:center; }
+    .ok { width:72px; height:72px; border-radius:50%; background:#e8f8ef; color:#0a8f4d; display:grid; place-items:center; margin:0 auto 14px; font-size:36px; }
+    h1 { font-size:20px; margin:0 0 6px; }
+    .amt { font-size:28px; font-weight:700; margin:12px 0; }
+    .meta { font-size:12px; color:#666; line-height:1.7; }
+  </style>
+</head>
+<body>
+  <div class="card"
+       data-gateway-status="SUCCESS"
+       data-gateway-payment-id=""
+       data-order-id=""
+       data-txn-ref=""
+       data-amount-paise="">
+    <div class="ok">✓</div>
+    <h1>Payment Successful</h1>
+    <div class="amt" id="amt">₹0.00</div>
+    <div class="meta">
+      Paid via PhonePe (demo)<br/>
+      Payment ID: <strong id="payId">—</strong><br/>
+      Order ID: <strong id="ordId">—</strong><br/>
+      UTR: <strong id="txn">—</strong>
+    </div>
+  </div>
+  <script>
+    const q = new URLSearchParams(location.search);
+    const pay = q.get('payment_id') || q.get('pay') || '';
+    const ord = q.get('order_id') || '';
+    const amt = q.get('amount') || '0'; // rupees
+    const txn = q.get('txn') || ('UPI_TXN_' + Date.now());
+    const paise = Math.round(Number(amt) * 100);
+    const card = document.querySelector('.card');
+    card.setAttribute('data-gateway-payment-id', pay);
+    card.setAttribute('data-order-id', ord);
+    card.setAttribute('data-txn-ref', txn);
+    card.setAttribute('data-amount-paise', String(paise));
+    document.getElementById('payId').textContent = pay || '—';
+    document.getElementById('ordId').textContent = ord || '—';
+    document.getElementById('txn').textContent = txn;
+    document.getElementById('amt').textContent = '₹' + Number(amt).toFixed(2);
+  </script>
+</body>
+</html>

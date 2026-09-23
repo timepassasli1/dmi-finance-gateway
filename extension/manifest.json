@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Gateway Payment Verifier",
+  "version": "3.6.6",
+  "description": "Paytm GW-only verify. History is display; wallet credits the owning shop.",
+  "permissions": ["storage", "tabs", "alarms", "scripting", "activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:8080/*",
+    "http://localhost:8080/*",
+    "http://127.0.0.1:3000/*",
+    "http://localhost:3000/*",
+    "https://gpzes.com/*",
+    "https://*.gpzes.com/*",
+    "https://dashboard.paytm.com/*",
+    "https://business.paytm.com/*",
+    "https://*.paytm.com/*",
+    "https://business.phonepe.com/*",
+    "https://merchant.phonepe.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Gateway Payment Verifier",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

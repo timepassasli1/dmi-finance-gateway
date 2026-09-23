@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prozesy Verifier — AGENT_PROZESY</title>
+  <style>
+    *{box-sizing:border-box}
+    body{font-family:system-ui,sans-serif;max-width:720px;margin:0 auto;padding:24px 16px 48px;color:#0f172a;line-height:1.55;background:#f8fafc}
+    h1{font-size:1.75rem;margin:0 0 8px}
+    .ver{display:inline-block;background:#6726A8;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;margin-bottom:16px}
+    code,kbd{background:#e2e8f0;padding:2px 7px;border-radius:6px;font-size:13px}
+    pre{background:#0f172a;color:#86efac;padding:14px;border-radius:10px;font-size:13px;overflow-x:auto}
+    .box{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px;margin:16px 0}
+    .warn{background:#fffbeb;border-color:#fcd34d}
+    .ok{background:#ecfdf5;border-color:#6ee7b7}
+    ol,ul{padding-left:22px}
+    li{margin:6px 0}
+    a.btn{display:inline-block;background:#6726A8;color:#fff!important;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:700;margin:8px 8px 0 0;font-size:15px}
+    a.btn.green{background:#059669}
+    a.btn.ghost{background:#fff;color:#6726A8!important;border:2px solid #6726A8}
+  </style>
+</head>
+<body>
+  <span class="ver">Premium Nuts · same VPA</span>
+  <h1>Prozesy agent</h1>
+  <p>Same Paytm VPA <code>paytm.s280p04@pty</code>. Confirm sirf Paytm remarks ke <code>GW</code> se. Wallet <strong>donation</strong> ka.</p>
+
+  <div class="box ok">
+    <strong>Extension</strong>
+    <p style="margin:10px 0 0">Prozesy defaults wali zip, ya existing extension me ye values paste:</p>
+    <a class="btn green" href="/gateway-extension-prozesy.zip" download="gateway-extension-prozesy.zip">Download Prozesy ZIP</a>
+    <a class="btn ghost" href="/gateway-extension-latest.zip" download="gateway-extension-latest.zip">Common ZIP (phir agent change)</a>
+  </div>
+
+  <div class="box warn">
+    <strong>Popup me ye lagao</strong>
+    <pre>Gateway URL
+https://gpzes.com/gw
+
+Agent
+AGENT_PROZESY
+
+Secret
+YOUR_AGENT_SECRET</pre>
+    <p style="margin:8px 0 0;font-size:14px">Save → Test connection → Pending count aana chahiye. Paytm <b>Transactions</b> pe Attach. Admin History pe Attach mat karo.</p>
+    <p style="margin:8px 0 0;font-size:14px">Is VPA pe ek hi Chrome rakho. Vivek agent aur Prozesy agent dono same Paytm pe mat chalao — race / double scrape.</p>
+  </div>
+
+  <div class="box">
+    <strong>Install</strong>
+    <ol>
+      <li>ZIP → unzip (<code>manifest.json</code> dikhe)</li>
+      <li><code>chrome://extensions</code> → Developer mode</li>
+      <li>Purani Gateway Verifier Remove → Load unpacked</li>
+      <li>Popup: AGENT_PROZESY + secret → ON → Test connection</li>
+      <li>Paytm Business → Transactions → Attach to this tab</li>
+    </ol>
+    <a class="btn" href="https://dashboard.paytm.com/next/transactions" target="_blank" rel="noopener">Paytm Transactions</a>
+    <a class="btn ghost" href="/admin/payments">Admin History</a>
+  </div>
+</body>
+</html>
