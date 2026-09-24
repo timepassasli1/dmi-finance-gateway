@@ -75,15 +75,16 @@
   btnPrimary.textContent = "Pay " + amountLabel + " securely with PhonePe";
   btnOpenUpi.href = upiPay;
 
-  // QR from standard upi:// so any app can scan
-  if (window.QRCode) {
-    QRCode.toCanvas(
-      document.getElementById("qr"),
-      upiPay,
-      { width: 220, margin: 2, color: { dark: "#003B4A", light: "#FFFFFF" } },
-      function () {}
-    );
-  }
+  // QR image (CDN QR library path was 404 — use public QR API)
+  const qrImg = document.getElementById("qr");
+  qrImg.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&ecc=M&data=" +
+    encodeURIComponent(upiPay);
+  qrImg.onerror = function () {
+    // fallback mirror
+    qrImg.src =
+      "https://quickchart.io/qr?size=220&margin=2&text=" + encodeURIComponent(upiPay);
+  };
 
   document.getElementById("copyVpa").addEventListener("click", async function () {
     try {
