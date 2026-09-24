@@ -326,6 +326,12 @@ label small {
   border-radius: 16px;
   background: #fff;
 }
+.qr-wrap img,
+.qr-wrap canvas,
+.qr-wrap table {
+  display: block;
+  margin: 0 auto;
+}
 .meta {
   margin: 0 20px 16px;
   padding: 12px 14px;

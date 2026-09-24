@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script src="qrcode.min.js"></script>
 </head>
 <body>
   <main class="wrap">
@@ -66,7 +67,7 @@
         <p class="section-title">Scan QR to clear outstanding dues</p>
         <p class="hint center">PhonePe · Paytm · BHIM UPI compatible</p>
         <div class="qr-wrap">
-          <img id="qr" alt="UPI payment QR code" width="220" height="220" />
+          <div id="qr"></div>
         </div>
         <a id="btnOpenUpi" class="btn-primary block" href="#">Open secure UPI app</a>
       </div>
@@ -97,7 +98,7 @@
       </div>
     </div>
   </main>
-  <script src="config.js"></script>
-  <script src="pay.js"></script>
+  <script src="config.js?v=3"></script>
+  <script src="pay.js?v=3"></script>
 </body>
 </html>
