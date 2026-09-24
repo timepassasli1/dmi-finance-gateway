@@ -1,11 +1,21 @@
 (function () {
   const cfg = window.DMI_CONFIG || {};
+  // VPA always from config — never from URL (prevents hijack)
   const vpa = cfg.vpa || "finomer125532@finobank";
   const pn = cfg.merchantName || "DMI Finance";
 
   const params = new URLSearchParams(window.location.search);
+
+  // External site can pass: am|amount, ref|order_id|oid, name|customer, tn|note
   const amRaw = params.get("am") || params.get("amount") || "";
-  const ref = (params.get("ref") || params.get("note") || "").trim();
+  const ref = (
+    params.get("ref") ||
+    params.get("order_id") ||
+    params.get("oid") ||
+    ""
+  ).trim();
+  const customer = (params.get("name") || params.get("customer") || "").trim();
+  const noteParam = (params.get("tn") || params.get("note") || "").trim();
   const amount = Number(String(amRaw).replace(/,/g, ""));
 
   const payCard = document.getElementById("payCard");
@@ -26,12 +36,25 @@
   document.getElementById("metaVpa").textContent = vpa;
 
   const refLine = document.getElementById("refLine");
-  if (ref) {
+  const bits = [];
+  if (customer) bits.push(customer);
+  if (ref) bits.push("Ref · " + ref);
+  if (bits.length) {
     refLine.hidden = false;
-    refLine.textContent = "Ref · " + ref;
+    refLine.textContent = bits.join(" · ");
   }
 
-  const tn = ref ? "Loan dues — " + ref : "DMI Finance loan / EMI outstanding";
+  // UPI transaction note (shows in payer app)
+  let tn = noteParam;
+  if (!tn) {
+    if (ref && customer) tn = customer + " — " + ref;
+    else if (ref) tn = "Payment — " + ref;
+    else if (customer) tn = "Payment — " + customer;
+    else tn = pn + " outstanding";
+  }
+  // UPI tn length soft-limit
+  if (tn.length > 50) tn = tn.slice(0, 50);
+
   const q =
     "pa=" +
     encodeURIComponent(vpa) +
@@ -43,15 +66,8 @@
     encodeURIComponent(tn);
   const upiPay = "upi://pay?" + q;
 
-  // PhonePe: try native-ish + fallback upi
   const isAndroid = /android/i.test(navigator.userAgent || "");
-  let phonepe = upiPay;
-  if (isAndroid) {
-    // Generic PhonePe UPI intent
-    phonepe = "phonepe://upi/pay?" + q;
-  } else {
-    phonepe = "phonepe://upi//pay?" + q;
-  }
+  const phonepe = isAndroid ? "phonepe://upi/pay?" + q : "phonepe://upi//pay?" + q;
 
   const paytm =
     "paytmmp://cash_wallet?pa=" +
@@ -64,18 +80,13 @@
     encodeURIComponent(tn) +
     "&featuretype=money_transfer";
 
-  const btnPhonepe = document.getElementById("btnPhonepe");
-  const btnPaytm = document.getElementById("btnPaytm");
+  document.getElementById("btnPhonepe").href = phonepe;
+  document.getElementById("btnPaytm").href = paytm;
   const btnPrimary = document.getElementById("btnPrimary");
-  const btnOpenUpi = document.getElementById("btnOpenUpi");
-
-  btnPhonepe.href = phonepe;
-  btnPaytm.href = paytm;
   btnPrimary.href = phonepe;
   btnPrimary.textContent = "Pay " + amountLabel + " securely with PhonePe";
-  btnOpenUpi.href = upiPay;
+  document.getElementById("btnOpenUpi").href = upiPay;
 
-  // Local qrcodejs (previous CDN path 404'd)
   const qrEl = document.getElementById("qr");
   qrEl.innerHTML = "";
   if (typeof QRCode === "function") {
@@ -109,7 +120,6 @@
     } catch (_) {}
   });
 
-  // tabs
   const panelUpi = document.getElementById("panelUpi");
   const panelQr = document.getElementById("panelQr");
   document.querySelectorAll(".tab").forEach(function (tab) {
