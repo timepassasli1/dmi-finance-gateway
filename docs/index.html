@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DMI Finance — Collection desk</title>
+  <meta name="description" content="Create secure UPI repayment links for outstanding loan / EMI dues" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <header class="hero">
+        <div class="hero-row">
+          <img class="mark" src="dmi-mark.svg" alt="DMI" width="48" height="48" />
+          <div>
+            <p class="eyebrow">Official collection desk</p>
+            <h1>DMI Finance</h1>
+          </div>
+        </div>
+        <div class="badges">
+          <span>SSL Secured</span>
+          <span>Encrypted link</span>
+          <span>UPI protected</span>
+        </div>
+        <p class="hero-copy">
+          Outstanding loan / EMI amount enter karke customer ko formal repayment link bhejo.
+          Customer sirf amount pay karega — OTP / PIN kabhi mat maango.
+        </p>
+      </header>
+
+      <form id="form" class="body">
+        <label>
+          <span>Outstanding amount (₹)</span>
+          <input id="amount" inputmode="decimal" placeholder="e.g. 2500" autocomplete="off" required />
+          <small>Exact overdue / EMI amount jo customer ko clear karna hai</small>
+        </label>
+        <label>
+          <span>Customer / loan reference</span>
+          <input id="ref" placeholder="Name · Loan ID · Mobile" autocomplete="off" />
+        </label>
+        <p id="err" class="err" hidden></p>
+        <button type="submit" class="btn-primary">Generate secure repayment link</button>
+        <p class="hint">Link UPI checkout open karega. Customer ko WhatsApp / SMS se bhejo.</p>
+      </form>
+
+      <section id="result" class="result" hidden>
+        <p class="result-title">Secure customer repayment link · <strong id="amtLabel"></strong></p>
+        <p class="result-sub">Official DMI Finance collection URL — customer ko yahi bhejo</p>
+        <div id="outUrl" class="url-box"></div>
+        <div class="row-btns">
+          <button type="button" id="copyBtn" class="btn-ghost">Copy secure link</button>
+          <a id="waBtn" class="btn-wa" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+        <a id="previewBtn" class="preview" href="#" target="_blank" rel="noopener">Preview pay page →</a>
+      </section>
+    </div>
+    <footer class="foot">
+      <p><strong>DMI Finance · Secure UPI repayment desk</strong></p>
+      <p>No login needed · Never request OTP / UPI PIN</p>
+    </footer>
+  </main>
+  <script src="config.js"></script>
+  <script src="create.js"></script>
+</body>
+</html>
